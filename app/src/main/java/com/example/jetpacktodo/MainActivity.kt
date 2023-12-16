@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.jetpacktodo.screens.HomeScreen
 import com.example.jetpacktodo.ui.theme.JetpackTodoTheme
 
 class MainActivity : ComponentActivity() {
@@ -29,49 +30,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    HomeScreen()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun MyAppContent() {
-    Column {
-        Greeting("Student")
-        Image(
-            painter = painterResource(id = R.drawable.ic_android), // Replace with your actual image resource
-            contentDescription = "Android Image",
-            modifier = Modifier
-                .size(100.dp)
-                .clip(CircleShape)
-        )
-        Tagline()
-    }
-}
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Composable
-fun Tagline( modifier: Modifier = Modifier) {
-    Text(
-        text = "Lets learn compose with fatih",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingStudent() {
-    JetpackTodoTheme {
-        MyAppContent()
     }
 }

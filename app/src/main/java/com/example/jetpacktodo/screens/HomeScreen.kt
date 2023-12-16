@@ -40,6 +40,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -97,7 +98,9 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     label = {
                         Text(text = "Title")
-                    }, colors = TextFieldDefaults.outlinedTextFieldColors(
+                    },colors  = OutlinedTextFieldDefaults.colors(
+                        unfocusedTextColor = Color.White ,
+                        focusedTextColor = Color.White  ,
                         focusedBorderColor = Color.White,
                         focusedLabelColor = Color.White,
                     )
@@ -111,7 +114,9 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     label = {
                         Text(text = "Sub Title")
-                    }, colors = TextFieldDefaults.outlinedTextFieldColors(
+                    }, colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedTextColor = Color.White ,
+                        focusedTextColor = Color.White,
                         focusedBorderColor = Color.White,
                         focusedLabelColor = Color.White,
                     )
@@ -155,41 +160,52 @@ fun HomeScreen(
             }
         }
     ) { paddings ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            AnimatedVisibility(
-                visible = todos.isEmpty(),
-                enter = scaleIn() + fadeIn(),
-                exit = scaleOut() + fadeOut()
+        Column {
+            Text(
+                text = "Fatih Todo List",
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 10.dp, start = 8.dp, top = 8.dp)
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
             ) {
-                Text(text = "No Todos Yet!", color = Color.White, fontSize = 22.sp)
-            }
-            AnimatedVisibility(
-                visible = todos.isNotEmpty(),
-                enter = scaleIn() + fadeIn(),
-                exit = scaleOut() + fadeOut()
-            ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(
-                            bottom = paddings.calculateBottomPadding() + 8.dp,
-                            top = 8.dp,
-                            end = 8.dp,
-                            start = 8.dp
-                        ), verticalArrangement = Arrangement.spacedBy(8.dp)
+                this@Column.AnimatedVisibility(
+                    visible = todos.isEmpty(),
+                    enter = scaleIn() + fadeIn(),
+                    exit = scaleOut() + fadeOut()
                 ) {
-                    items(todos.sortedBy { it.done }, key = {
-                        it.id
-                    }) { todo ->
-                        TodoItem(todo = todo, onClick = { viewModel.updateTodo(
-                            todo.copy(done = !todo.done)
-                        ) }, onDelete = {
-                            viewModel.deleteTodo(todo)
-                        })
+                    Text(text = "No Todos Yet!", color = Color.White, fontSize = 22.sp)
+                }
+                this@Column.AnimatedVisibility(
+                    visible = todos.isNotEmpty(),
+                    enter = scaleIn() + fadeIn(),
+                    exit = scaleOut() + fadeOut()
+                ) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(
+                                bottom = paddings.calculateBottomPadding() + 8.dp,
+                                top = 8.dp,
+                                end = 8.dp,
+                                start = 8.dp
+                            ), verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(todos.sortedBy { it.done }, key = {
+                            it.id
+                        }) { todo ->
+                            TodoItem(todo = todo, onClick = {
+                                viewModel.updateTodo(
+                                    todo.copy(done = !todo.done)
+                                )
+                            }, onDelete = {
+                                viewModel.deleteTodo(todo)
+                            })
+                        }
                     }
                 }
             }
@@ -207,12 +223,14 @@ fun LazyItemScope.TodoItem(todo: TodoEntity, onClick: () -> Unit, onDelete: () -
         ), animationSpec = tween(500)
     )
 
-    Box(modifier = Modifier.fillMaxWidth().animateItemPlacement(
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
-        )
-    ), contentAlignment = Alignment.BottomEnd) {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .animateItemPlacement(
+            animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow
+            )
+        ), contentAlignment = Alignment.BottomEnd) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
