@@ -36,3 +36,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingStudent() {
+    JetpackTodoTheme {
+
+    }
+}
