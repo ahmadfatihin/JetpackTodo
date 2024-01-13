@@ -1,3 +1,5 @@
+import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -60,6 +62,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.21")
+
 
     //Test
     testImplementation("junit:junit:4.13.2")
@@ -72,10 +76,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-
     // MockK
     testImplementation("io.mockk:mockk:1.12.0")
-
 
     val koinAndroidVersion = "3.4.0"
     val koinAndroidComposeVersion = "3.4.4"
@@ -90,5 +92,6 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
-
 }
+
+

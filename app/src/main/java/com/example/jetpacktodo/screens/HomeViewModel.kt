@@ -23,7 +23,7 @@ class HomeViewModel:ViewModel(),KoinComponent {
         getTodos()
     }
 
-    private fun getTodos(){
+     fun getTodos(){
         viewModelScope.launch(Dispatchers.IO) {
             repo.getTodos().collect{data->
                 _todos.update { data }
